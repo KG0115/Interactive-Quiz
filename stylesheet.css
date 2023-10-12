@@ -1,0 +1,102 @@
+
+body {
+    font-family: "Hiragino Kaku Gothic Pro", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.quiz-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 3px solid #ccc;
+    border-radius: 10px;
+    background-color: whitesmoke;
+    box-shadow: 0 0 10px;
+}
+
+h1 {
+    text-align: center;
+    color: black;
+}
+
+#question-container {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.option {
+    list-style-type: none;
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.option:hover {
+    background-color: #afa8a8;
+}
+
+#result-container {
+    display: none;
+    margin-top: 20px;
+    text-align: center;
+}
+
+#next-button {
+    display: none;
+    margin: 0 auto;
+    padding: 10px 20px;
+    background-color: black;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#next-button:hover {
+    background-color: #0056b3;
+}
+/* Add this to your existing CSS */
+.option.selected {
+    background-color: #007bff;
+    color: #fff;
+    cursor: default;
+}
+
+.option.selected:hover {
+    background-color: #0056b3;
+}
+/* Style for correct option */
+.option.correct {
+    background-color: #4CAF50; /* Green */
+    color: #fff;
+    cursor: default;
+}
+
+/* Style for wrong option */
+.option.wrong {
+    background-color: #FF5733; /* Red */
+    color: #fff;
+    cursor: default;
+}
+
+.option.selected {
+    cursor: default;
+}
+
+.option.selected:hover {
+    cursor: default;
+}
+#restart-button {
+    display:none;
+    margin: 0 auto;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer}
