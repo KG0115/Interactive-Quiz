@@ -1,116 +1,100 @@
-const questions = [
-    {
-        question: "How many elements are in the periodic table?",
-        options: ["102", "98", "84", "118"],
-        correctAnswer: "118"
-    },
-    {
-        question: "How many minutes are in a full week?",
-        options: ["10,080", "15,120", "20,180", "12,060"],
-        correctAnswer: "10,080"
-    },
-    {
-        question: "How many dots appear on a pair of dice?",
-        options: ["36", "21", "42", "48"],
-        correctAnswer: "42"
-    },
-    {
-        question: "Simplify the expression 4m+5+2m-1",
-        options: ["10m", "6m + 4", "6m + 6", "6m - 4"],
-        correctAnswer: "6m + 4"
-    },
-    {
-        question: "Which equation represents a line parallel to the y-axis?",
-        options: ["y = x", "y = 3", "x = -y", "x = -4"],
-        correctAnswer: "x = -4"
-    }
-];
 
-const questionText = document.getElementById("question-text");
-const optionsContainer = document.getElementById("options-container");
-const nextButton = document.getElementById("next-button");
-
-const resultContainer = document.getElementById("result-container"); // Define the resultContainer
-const resultText = document.getElementById("result-text");
-
+let questions = [];
 let currentQuestion = 0;
 let score = 0;
 
+const questionText = $("#question-text");
+const optionsContainer = $("#options-container");
+const resultContainer = $("#result-container");
+const resultText = $("#result-text");
+const nextButton = $("#next-button");
+const restartButton = $("#restart-button");
+
+function loadQuizData() {
+    $.ajax({
+        url: 'quiz_questions.json',
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            questions = data;
+            loadQuestion();
+        },
+        error: function (error) {
+            console.error('Error loading quiz data:', error);
+        }
+    });
+}
+
 function loadQuestion() {
     const current = questions[currentQuestion];
-    questionText.innerText = current.question;
-    optionsContainer.innerHTML = "";
+    questionText.text(current.question);
 
-    current.options.forEach((option) => {
-        const li = document.createElement("li");
-        li.className = "option";
-        li.innerText = option;
-        li.addEventListener("click", () => handleAnswer(option, li));
-        optionsContainer.appendChild(li);
+    optionsContainer.empty();
+
+    current.options.forEach((option, index) => {
+        const li = $(`<li class="option">${option}</li>`);
+        li.click(() => handleAnswer(option, li));
+        optionsContainer.append(li);
     });
 }
 
 function handleAnswer(selectedOption, selectedElement) {
     checkAnswer(selectedOption, selectedElement);
-    optionsContainer.querySelectorAll(".option").forEach((option) => {
-        option.removeEventListener("click", () => handleAnswer(selectedOption, option));
-        option.classList.remove("selected");
-    });
-    nextButton.style.display = "block";
+    $(".option").off("click");
+    nextButton.show();
 }
 
 function checkAnswer(selectedOption, selectedElement) {
     const current = questions[currentQuestion];
-    const resultContainer = document.createElement("div");
-    resultContainer.className = "result";
+    const resultContainer = $("<div class='result'></div>");
 
     if (selectedOption === current.correctAnswer) {
-        resultContainer.innerText = "Your answer is correct!";
-        selectedElement.classList.add("correct");
+        resultContainer.text("Your answer is correct!");
+        selectedElement.addClass("correct");
     } else {
-        resultContainer.innerText = `Your answer: ${selectedOption} | Correct answer: ${current.correctAnswer}`;
-        selectedElement.classList.add("wrong");
+        resultContainer.text(`Your answer: ${selectedOption} | Correct answer: ${current.correctAnswer}`);
+        selectedElement.addClass("wrong");
 
         // Display the correct answer
         const correctOptionIndex = current.options.indexOf(current.correctAnswer);
         if (correctOptionIndex !== -1) {
-            const correctOptionElement = optionsContainer.children[correctOptionIndex];
-            correctOptionElement.classList.add("correct");
+            optionsContainer.children().eq(correctOptionIndex).addClass("correct");
         }
     }
 
-    optionsContainer.appendChild(resultContainer);
+    resultContainer.appendTo(optionsContainer);
 
     if (selectedOption === current.correctAnswer) {
         score++;
     }
 }
 
-nextButton.addEventListener("click", () => {
+nextButton.click(() => {
     if (currentQuestion < questions.length - 1) {
         currentQuestion++;
         loadQuestion();
-        nextButton.style.display = "none";
+        nextButton.hide();
     } else {
         showResult();
     }
 });
-const restartButton = document.getElementById("restart-button");
 
-restartButton.addEventListener("click", () => {
+restartButton.click(() => {
     currentQuestion = 0;
     score = 0;
     loadQuestion();
-    resultContainer.style.display = "none"; // Hide the result container
-    restartButton.style.display = "none"; // Hide the restart button again
-    nextButton.style.display = "block"; // Show the "Next" button
+    resultContainer.hide();
+    restartButton.hide();
+    nextButton.show();
 });
 
 function showResult() {
-    resultText.innerText = `You scored ${score} out of ${questions.length}!`;
-    resultContainer.style.display = "block"; // Show the result container
-    nextButton.style.display = "none"; // Hide the "Next" button
-    restartButton.style.display = "block"; // Show the "Restart Quiz" button
+    resultText.text(`You scored ${score} out of ${questions.length}!`);
+    resultContainer.show();
+    nextButton.hide();
+    restartButton.show();
 }
-loadQuestion();
+
+loadQuizData();
+
 

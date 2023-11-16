@@ -1,0 +1,42 @@
+[
+  {
+    "question": "How many elements are in the periodic table?",
+    "options": ["102", "98", "84", "118"],
+    "correctAnswer": "118"
+  },
+  {
+  "question": "What is a one-fifth of one-tenth of 50?",
+  "options": ["1", "5", "10", "2"],
+  "correctAnswer": "1"
+  },
+  {
+    "question": "How many minutes are in a full week?",
+    "options": ["10,080", "15,120", "20,180", "12,060"],
+    "correctAnswer": "10,080"
+  },
+  {
+    "question": "How many dots appear on a pair of dice?",
+    "options": ["36", "21", "42", "48"],
+    "correctAnswer": "42"
+  },
+  {
+    "question": "Simplify the expression 4m+5+2m-1",
+    "options": ["10m", "6m + 4", "6m + 6", "6m - 4"],
+    "correctAnswer": "6m + 4"
+  },
+  {
+    "question": "Which equation represents a line parallel to the y-axis?",
+    "options": ["y = x", "y = 3", "x = -y", "x = -4"],
+    "correctAnswer": "x = -4"
+  },
+  {
+  "question": "What comes after the sequence 1,2,4,8,16,32,... ?",
+  "options": ["48", "64", "60", "70"],
+  "correctAnswer": "64"
+  },
+  {
+  "question": "Which does not belong?",
+  "options": ["strawberry", "cherry", "blueberry", "broccoli"],
+  "correctAnswer": "broccoli"
+  }
+]
